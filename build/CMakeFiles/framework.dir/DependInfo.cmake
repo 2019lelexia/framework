@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/zml/desktop/framework/process_image.cpp" "CMakeFiles/framework.dir/process_image.cpp.o" "gcc" "CMakeFiles/framework.dir/process_image.cpp.o.d"
   "/home/zml/desktop/framework/tracker.cpp" "CMakeFiles/framework.dir/tracker.cpp.o" "gcc" "CMakeFiles/framework.dir/tracker.cpp.o.d"
   "/home/zml/desktop/framework/tracker2ml.cpp" "CMakeFiles/framework.dir/tracker2ml.cpp.o" "gcc" "CMakeFiles/framework.dir/tracker2ml.cpp.o.d"
+  "/home/zml/desktop/framework/trackerDSO.cpp" "CMakeFiles/framework.dir/trackerDSO.cpp.o" "gcc" "CMakeFiles/framework.dir/trackerDSO.cpp.o.d"
   "/home/zml/desktop/framework/trajectory.cpp" "CMakeFiles/framework.dir/trajectory.cpp.o" "gcc" "CMakeFiles/framework.dir/trajectory.cpp.o.d"
   )
 

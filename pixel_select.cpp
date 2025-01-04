@@ -189,26 +189,26 @@ void PixelSelector::selectNormalPointFromImage(shared_ptr<Frame> &frame)
                     {
                         // float val_weight = 0.9 * gridROIDx.at<float>(y, x) + 0.1 * gridROIDy.at<float>(y, x);
                         float val = gridROIGradient.at<float>(y, x);
-                        // bool isMaxInRegion = true;
-                        // for(int y_region = -nonMaxBlockEdge; y_region <= nonMaxBlockEdge; y_region++)
-                        // {
-                        //     for(int x_region = -nonMaxBlockEdge; x_region <= nonMaxBlockEdge; x_region++)
-                        //     {
-                        //         if(gridROIGradient.at<float>(y + y_region, x + x_region) > val)
-                        //         {
-                        //             isMaxInRegion = false;
-                        //             break;
-                        //         }
-                        //     }
-                        //     if(!isMaxInRegion)
-                        //     {
-                        //         break;
-                        //     }
-                        // }
-                        // if(!isMaxInRegion || val < thresholdSelectedGradient)
-                        // {
-                        //     continue;
-                        // }
+                        bool isMaxInRegion = true;
+                        for(int y_region = -nonMaxBlockEdge; y_region <= nonMaxBlockEdge; y_region++)
+                        {
+                            for(int x_region = -nonMaxBlockEdge; x_region <= nonMaxBlockEdge; x_region++)
+                            {
+                                if(gridROIGradient.at<float>(y + y_region, x + x_region) > val)
+                                {
+                                    isMaxInRegion = false;
+                                    break;
+                                }
+                            }
+                            if(!isMaxInRegion)
+                            {
+                                break;
+                            }
+                        }
+                        if(!isMaxInRegion || val < thresholdSelectedGradient)
+                        {
+                            continue;
+                        }
                         if(val < thresholdSelectedGradient)
                         {
                             continue;

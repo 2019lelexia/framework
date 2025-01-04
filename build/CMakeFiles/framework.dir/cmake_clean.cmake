@@ -17,6 +17,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/framework.dir/tracker.cpp.o.d"
   "CMakeFiles/framework.dir/tracker2ml.cpp.o"
   "CMakeFiles/framework.dir/tracker2ml.cpp.o.d"
+  "CMakeFiles/framework.dir/trackerDSO.cpp.o"
+  "CMakeFiles/framework.dir/trackerDSO.cpp.o.d"
   "CMakeFiles/framework.dir/trajectory.cpp.o"
   "CMakeFiles/framework.dir/trajectory.cpp.o.d"
   "framework"

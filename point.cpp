@@ -36,7 +36,7 @@ Point::~Point()
 void Point::setInitialParameters()
 {
     depth = 1;
-    depthNew = depth;
+    // depthNew = depth;
     depthConvergence = 1;
     childNum = 0;
     variance = 0;
@@ -47,10 +47,10 @@ void Point::setInitialParameters()
     energy.setZero();
 
     bAlpha = 0;
-    JAlphaT_mul_JAlphaSingle = 1;
+    JAlphaT_mul_JAlphaSingle = 0;
     JAlphaT_mul_JBeta = Vector8f::Zero();
     bAlphaNew = 0;
-    JAlphaT_mul_JAlphaSingleNew = 1;
+    JAlphaT_mul_JAlphaSingleNew = 0;
     JAlphaT_mul_JBetaNew = Vector8f::Zero();
     
     outlierThreshold = 8 * 12 * 12;

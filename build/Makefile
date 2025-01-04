@@ -419,6 +419,30 @@ tracker2ml.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/tracker2ml.cpp.s
 .PHONY : tracker2ml.cpp.s
 
+trackerDSO.o: trackerDSO.cpp.o
+.PHONY : trackerDSO.o
+
+# target to build an object file
+trackerDSO.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/trackerDSO.cpp.o
+.PHONY : trackerDSO.cpp.o
+
+trackerDSO.i: trackerDSO.cpp.i
+.PHONY : trackerDSO.i
+
+# target to preprocess a source file
+trackerDSO.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/trackerDSO.cpp.i
+.PHONY : trackerDSO.cpp.i
+
+trackerDSO.s: trackerDSO.cpp.s
+.PHONY : trackerDSO.s
+
+# target to generate assembly for a file
+trackerDSO.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/trackerDSO.cpp.s
+.PHONY : trackerDSO.cpp.s
+
 trajectory.o: trajectory.cpp.o
 .PHONY : trajectory.o
 
@@ -487,6 +511,9 @@ help:
 	@echo "... tracker2ml.o"
 	@echo "... tracker2ml.i"
 	@echo "... tracker2ml.s"
+	@echo "... trackerDSO.o"
+	@echo "... trackerDSO.i"
+	@echo "... trackerDSO.s"
 	@echo "... trajectory.o"
 	@echo "... trajectory.i"
 	@echo "... trajectory.s"

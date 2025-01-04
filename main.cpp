@@ -79,8 +79,8 @@ int main()
     // ref_frame->visualizePointCloudLevel(0);
 
     tracker->setTarFrame(tar_frame2);
-    // tracker->optimizeDSO();
-    tracker->optimizeRelativePose();
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
     // tracker->optimizeRelativePose2ml();
     cout << "the second one: " << endl;
     cout << tracker->relativaPose.matrix() << endl;
