@@ -1,0 +1,5 @@
+/home/zml/desktop/framework/build/CMakeFiles/framework.dir
+/home/zml/desktop/framework/build/CMakeFiles/debug.dir
+/home/zml/desktop/framework/build/CMakeFiles/debug3.dir
+/home/zml/desktop/framework/build/CMakeFiles/edit_cache.dir
+/home/zml/desktop/framework/build/CMakeFiles/rebuild_cache.dir
