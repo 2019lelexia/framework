@@ -97,6 +97,36 @@ void ImageInfo::calculateGrad()
     }
 }
 
+void ImageInfo::calculateGradOrigin()
+{
+    for(int i = 0; i < LEVEL; i++)
+    {
+        cv::Mat tmp = pyramids.at(i);
+        cv::Mat tmpdx(tmp.size(), CV_32F, cv::Scalar(0)), tmpdy(tmp.size(), CV_32F, cv::Scalar(0)), tmpgrad_2(tmp.size(), CV_32F, cv::Scalar(0));
+        int w = wG[i];
+        int h = hG[i];
+        for(int index = w; index < w * (h - 1); index++)
+        {
+            float deltax = 0.5f * (tmp.at<float>(index + 1) - tmp.at<float>(index - 1));
+            float deltay = 0.5f * (tmp.at<float>(index + w) - tmp.at<float>(index - w));
+            if(isnan(deltax) || fabs(deltax) > 255.0)
+            {
+                deltax = 0;
+            }
+            if(isnan(deltay) || fabs(deltay) > 255.0)
+            {
+                deltay = 0;
+            }
+            tmpdx.at<float>(index) = deltax;
+            tmpdy.at<float>(index) = deltay;
+            tmpgrad_2.at<float>(index) = deltax * deltax + deltay * deltay;
+        }
+        dx.push_back(tmpdx);
+        dy.push_back(tmpdy);
+        grad_2.push_back(tmpgrad_2);
+    }
+}
+
 
 ImageFolder::ImageFolder(string path_folder, string path_calibration): pathFolder(path_folder), pathCalibration(path_calibration), totalSize(0)
 {}
@@ -122,9 +152,6 @@ void ImageFolder::readImageFolder()
         shared_ptr<ImageInfo> ptr_imageInfo = make_shared<ImageInfo>();
         ptr_imageInfo->readImage(path.string());
         ptr_imageInfo->makePyramids();
-        ptr_imageInfo->calculateGrad();
-        album.push_back(ptr_imageInfo);
-        ids.push_back(totalSize);
         if(totalSize == 0)
         {
             cv::FileStorage fs(pathCalibration, cv::FileStorage::READ);
@@ -136,6 +163,9 @@ void ImageFolder::readImageFolder()
             ptr_imageInfo->setGlobalCalibration(fs["fx"], fs["fy"], fs["cx"], fs["cy"]);
             ptr_imageInfo->setGlobalSize();
         }
+        ptr_imageInfo->calculateGradOrigin();
+        album.push_back(ptr_imageInfo);
+        ids.push_back(totalSize);
         totalSize++;
     }
     assert(album.size() == totalSize);

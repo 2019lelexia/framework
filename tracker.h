@@ -44,6 +44,14 @@ public:
     vector<Matrix8f> HPoseAffineNew;
     vector<Vector8f> bPoseAffineNew;
 
+    vector<Vector8f> JAlpha_mul_JBeta2ml;
+    vector<float> bAlpha2ml;
+    vector<float> JAlpha_mul_JAlphaSingle2ml;
+
+    vector<Vector8f> JAlpha_mul_JBeta2mlNew;
+    vector<float> bAlpha2mlNew;
+    vector<float> JAlpha_mul_JAlphaSingle2mlNew;
+
     vector<Matrix8f> H;
     vector<Vector8f> b;
 

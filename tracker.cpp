@@ -4,16 +4,6 @@ SingleTracker::SingleTracker() : relativaPose(Eigen::Matrix3d::Identity(), Eigen
 {
     relativaPoseNew = relativaPose;
     relativeAffineNew = relativeAffineNew;
-    pattern.emplace_back(0, 0);
-    pattern.emplace_back(2, 0);
-    pattern.emplace_back(-2, 0);
-    pattern.emplace_back(0, 2);
-    pattern.emplace_back(0, -2);
-    pattern.emplace_back(1, 1);
-    pattern.emplace_back(-1, 1);
-    pattern.emplace_back(-1, -1);
-    patternNum = 8;
-    huberThreshold = 9;
     initializationDropThreshold = 5;
     for(int i = 0; i < LEVEL; i++)
     {
@@ -28,6 +18,15 @@ SingleTracker::SingleTracker() : relativaPose(Eigen::Matrix3d::Identity(), Eigen
         HPoseAffineNew.push_back(Matrix8f::Zero());
         bPoseAffineNew.push_back(Vector8f::Zero());
         numPoints.push_back(0);
+    }
+    for(int i = 0; i < wG[0] * hG[0]; i++)
+    {
+        JAlpha_mul_JAlphaSingle2ml.push_back(0);
+        bAlpha2ml.push_back(0);
+        JAlpha_mul_JBeta2ml.push_back(Vector8f::Zero());
+        JAlpha_mul_JAlphaSingle2mlNew.push_back(0);
+        bAlpha2mlNew.push_back(0);
+        JAlpha_mul_JBeta2mlNew.push_back(Vector8f::Zero());
     }
     weightEquation.diagonal()[0] = weightEquation.diagonal()[1] = weightEquation.diagonal()[2] = 1.0;
     weightEquation.diagonal()[3] = weightEquation.diagonal()[4] = weightEquation.diagonal()[5] = 0.5;
@@ -55,7 +54,7 @@ void SingleTracker::setRefFrame(shared_ptr<Frame> _refFrame)
 void SingleTracker::setTarFrame(shared_ptr<Frame> _tarFrame)
 {
     tarFrame = _tarFrame;
-    relativeAffine = refFrame->affine.deviationAffineLight(refFrame->exposure, tarFrame->exposure, refFrame->affine, tarFrame->affine);
+    // relativeAffine = refFrame->affine.deviationAffineLight(refFrame->exposure, tarFrame->exposure, refFrame->affine, tarFrame->affine);
 }
 
 void SingleTracker::setTrajectory(shared_ptr<Trajectory> _trajectoryer)

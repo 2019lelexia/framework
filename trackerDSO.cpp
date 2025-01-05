@@ -139,7 +139,7 @@ void SingleTracker::optimizeDSO()
             // cout << "doing: " << iterations << endl;
         }
         lastResult = energyLast;
-        exit(1);
+        // exit(1);
     }
     relativaPose = poseRefToTarCurrent;
     relativeAffine[0] = affRefToTarCurrent.a;
@@ -176,7 +176,7 @@ void SingleTracker::climbDepthLevelDSO(int level)
         }
         else
         {
-            shared_ptr<Point> ptr_parent = refFrame->concernNormalPoints.at(level).at(ptr_point->indexParent);
+            shared_ptr<Point> ptr_parent = refFrame->concernNormalPoints.at(level + 1).at(ptr_point->indexParent);
             ptr_parent->depthConvergence += ptr_point->depthConvergence * ptr_point->variance;
             ptr_parent->childNum += ptr_point->variance;
         }
@@ -211,6 +211,9 @@ void SingleTracker::updateDepthThisLevelDSO(int level)
         ptr_point->JAlphaT_mul_JAlphaSingle = ptr_point->JAlphaT_mul_JAlphaSingleNew;
         ptr_point->JAlphaT_mul_JBeta = ptr_point->JAlphaT_mul_JBetaNew;
     }
+    std::swap(JAlpha_mul_JAlphaSingle2ml, JAlpha_mul_JAlphaSingle2mlNew);
+    std::swap(JAlpha_mul_JBeta2ml, JAlpha_mul_JBeta2mlNew);
+    std::swap(bAlpha2ml, bAlpha2mlNew);
 }
 
 void SingleTracker::exchangeOriginAndNewDSO()
@@ -227,7 +230,7 @@ void SingleTracker::spreadDepthToNextLevelDSO(int nextLevel)
     {
         shared_ptr<Point> ptr_point = (*iter);
         shared_ptr<Point> ptr_parent = refFrame->concernNormalPoints.at(nextLevel).at(ptr_point->indexParent);
-        if(ptr_parent->isGood == false || ptr_parent->JAlphaT_mul_JAlphaSingle < 0.1)
+        if(ptr_parent->isGood == false || ptr_parent->variance < 0.1)
         {
             continue;
         }
@@ -237,11 +240,11 @@ void SingleTracker::spreadDepthToNextLevelDSO(int nextLevel)
             {
                 ptr_point->depthConvergence = ptr_point->depth = ptr_point->depthNew = ptr_parent->depthConvergence;
                 ptr_point->isGood = true;
-                ptr_point->JAlphaT_mul_JAlphaSingle = 0;
+                ptr_point->variance = 0;
             }
             else
             {
-                float tmp = (ptr_point->depthConvergence * ptr_point->JAlphaT_mul_JAlphaSingle * 2 + ptr_parent->depthConvergence * ptr_parent->JAlphaT_mul_JAlphaSingle) / (ptr_point->JAlphaT_mul_JAlphaSingle * 2 + ptr_parent->JAlphaT_mul_JAlphaSingle);
+                float tmp = (ptr_point->depthConvergence * ptr_point->variance * 2 + ptr_parent->depthConvergence * ptr_parent->variance) / (ptr_point->variance * 2 + ptr_parent->variance);
                 ptr_point->depthConvergence = ptr_point->depth = ptr_point->depthNew = tmp;
             }
         }
@@ -254,8 +257,10 @@ void SingleTracker::probeDepthThisLevelDSO(int level, float lambda, Vector8f inc
     const float maxPixelStep = 0.25;
     const float maxStepThreshold = 1e10;
     int num = 0;
+    int count = -1;
     for(auto iter = refFrame->concernNormalPoints.at(level).begin(); iter != refFrame->concernNormalPoints.at(level).end(); iter++)
     {
+        count++;
         num++;
         shared_ptr<Point> ptr_point = (*iter);
         if(ptr_point->isGood == false)
@@ -264,7 +269,8 @@ void SingleTracker::probeDepthThisLevelDSO(int level, float lambda, Vector8f inc
         }
         else
         {
-            float incrementDepth = (-ptr_point->bAlpha - ptr_point->JAlphaT_mul_JBeta.dot(incrementPoseAffineThisLevel)) / ((ptr_point->JAlphaT_mul_JAlphaSingle + 1) * (1 + lambda));
+            float incrementDepth = (-bAlpha2ml[count] - JAlpha_mul_JBeta2ml[count].dot(incrementPoseAffineThisLevel)) * JAlpha_mul_JAlphaSingle2ml[count] / (1 + lambda);
+            // float incrementDepth = (-ptr_point->bAlpha - ptr_point->JAlphaT_mul_JBeta.dot(incrementPoseAffineThisLevel)) / ((ptr_point->JAlphaT_mul_JAlphaSingle + 1) * (1 + lambda));
             float maxStepThisPoint = maxPixelStep * ptr_point->maxstep;
             if(maxStepThisPoint > maxStepThreshold)
             {
@@ -315,8 +321,8 @@ Vector2f SingleTracker::compareEnergyRegression(int level)
             }
             else
             {
-                energyRegression[0] += ptr_point->depth - ptr_point->depthConvergence;
-                energyRegression[1] += ptr_point->depthNew - ptr_point->depthConvergence;
+                energyRegression[0] += (ptr_point->depth - ptr_point->depthConvergence) * (ptr_point->depth - ptr_point->depthConvergence);
+                energyRegression[1] += (ptr_point->depthNew - ptr_point->depthConvergence) * (ptr_point->depthNew - ptr_point->depthConvergence);
             }
         }
         return energyRegression;
@@ -760,15 +766,7 @@ Vector3f SingleTracker::incrementalEquationDSO(int level, Matrix8f& Hsc, Vector8
     int totalNumPoint = refFrame->concernNormalPoints.at(level).size();
     float E = 0;
     int Enum = 0;
-    vector<float> vecJAlphaT_mul_JAlphaSingle;
-    vector<float> vecbAlpha;
-    vector<Vector8f> vecJAlphaT_mul_JBeta;
-    for(int i = 0; i < totalNumPoint; i++)
-    {
-        vecJAlphaT_mul_JAlphaSingle.push_back(0);
-        vecbAlpha.push_back(0);
-        vecJAlphaT_mul_JBeta.push_back(Vector8f::Zero());
-    }
+
 
     int count = -1;
     for(auto iter = refFrame->concernNormalPoints.at(level).begin(); iter != refFrame->concernNormalPoints.at(level).end(); iter++)
@@ -805,6 +803,10 @@ Vector3f SingleTracker::incrementalEquationDSO(int level, Matrix8f& Hsc, Vector8
         JAlphaT_mul_JAlphaSingle = 0;
         bBeta.setZero();
         bAlpha = 0;
+
+        JAlpha_mul_JAlphaSingle2mlNew[count] = 0;
+        bAlpha2mlNew[count] = 0;
+        JAlpha_mul_JBeta2mlNew[count].setZero();
 
         bool isGood = true;
         float energy = 0;
@@ -861,15 +863,16 @@ Vector3f SingleTracker::incrementalEquationDSO(int level, Matrix8f& Hsc, Vector8
                 ptr_point->maxstep = maxstepSinglePoint;
             }
 
+            JAlpha_mul_JAlphaSingle2mlNew[count] += componentJacobiAlphaSingle * componentJacobiAlphaSingle;
+            bAlpha2mlNew[count] += componentJacobiAlphaSingle * componentError;
+            JAlpha_mul_JBeta2mlNew[count] += componentsJacobiBeta * componentJacobiAlphaSingle;
+
             JAlphaT_mul_JBeta += componentJacobiAlphaSingle * componentsJacobiBeta;
             JBetaT_mul_JBeta += componentsJacobiBeta * componentsJacobiBeta.transpose();
             JAlphaT_mul_JAlphaSingle += componentJacobiAlphaSingle * componentJacobiAlphaSingle;
             bAlpha += componentJacobiAlphaSingle * componentError;
             bBeta += componentsJacobiBeta * componentError;
 
-            vecJAlphaT_mul_JAlphaSingle[count] = JAlphaT_mul_JAlphaSingle;
-            vecJAlphaT_mul_JBeta[count] = JAlphaT_mul_JBeta;
-            vecbAlpha[count] = bAlpha;
         }
         if(!isGood || energy > ptr_point->outlierThreshold * 20)
         {
@@ -924,21 +927,23 @@ Vector3f SingleTracker::incrementalEquationDSO(int level, Matrix8f& Hsc, Vector8
         {
             continue;
         }
-        ptr_point->JAlphaT_mul_JAlphaSingleNew = vecJAlphaT_mul_JAlphaSingle[count];
+        ptr_point->varianceNew = JAlpha_mul_JAlphaSingle2mlNew[count];
+        ptr_point->JAlphaT_mul_JAlphaSingleNew = JAlpha_mul_JAlphaSingle2mlNew[count];
         
-        vecbAlpha[count] += alphaSmooth * (ptr_point->depthNew - 1);
-        vecJAlphaT_mul_JAlphaSingle[count] += alphaSmooth;
-        
+        bAlpha2mlNew[count] += alphaSmooth * (ptr_point->depthNew - 1);
+        JAlpha_mul_JAlphaSingle2mlNew[count] += alphaSmooth;
+
         if(alphaSmooth == 0)
         {
-            vecbAlpha[count] += couplingWeight * (ptr_point->depthNew - ptr_point->depthConvergence);
-            vecJAlphaT_mul_JAlphaSingle[count] += couplingWeight;
+            bAlpha2mlNew[count] += couplingWeight * (ptr_point->depthNew - ptr_point->depthConvergence);
+            JAlpha_mul_JAlphaSingle2mlNew[count] += couplingWeight;
         }
-        ptr_point->bAlphaNew = vecbAlpha[count];
-        ptr_point->JAlphaT_mul_JBetaNew = vecJAlphaT_mul_JBeta[count];
 
-        Hsc += vecJAlphaT_mul_JBeta[count] * vecJAlphaT_mul_JBeta[count].transpose() / (vecJAlphaT_mul_JAlphaSingle[count] + 1);
-        bsc += vecJAlphaT_mul_JBeta[count] * vecbAlpha[count] / (vecJAlphaT_mul_JAlphaSingle[count] + 1);
+        JAlpha_mul_JAlphaSingle2mlNew[count] = 1 / (1 + JAlpha_mul_JAlphaSingle2mlNew[count]);
+        // Hsc += vecJAlphaT_mul_JBeta[count] * vecJAlphaT_mul_JBeta[count].transpose() / (vecJAlphaT_mul_JAlphaSingle[count] + 1);
+        // bsc += vecJAlphaT_mul_JBeta[count] * vecbAlpha[count] / (vecJAlphaT_mul_JAlphaSingle[count] + 1);
+        Hsc += JAlpha_mul_JBeta2mlNew[count] * JAlpha_mul_JBeta2mlNew[count].transpose() * JAlpha_mul_JAlphaSingle2mlNew[count];
+        bsc += JAlpha_mul_JBeta2mlNew[count] * bAlpha2mlNew[count] * JAlpha_mul_JAlphaSingle2mlNew[count];
     }
     HP(0, 0) += alphaSmooth * totalNumPoint;
     HP(1, 1) += alphaSmooth * totalNumPoint;

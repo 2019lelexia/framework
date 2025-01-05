@@ -18,6 +18,17 @@ int main()
     shared_ptr<ImageFolder> folder = make_shared<ImageFolder>("./", "../calibration/kitti.xml");
     folder->readImageFolder();
 
+    pattern.emplace_back(0, 0);
+    pattern.emplace_back(2, 0);
+    pattern.emplace_back(-2, 0);
+    pattern.emplace_back(0, 2);
+    pattern.emplace_back(0, -2);
+    pattern.emplace_back(1, 1);
+    pattern.emplace_back(-1, 1);
+    pattern.emplace_back(-1, -1);
+    patternNum = 8;
+    huberThreshold = 9;
+
     shared_ptr<Frame> ref_frame = make_shared<Frame>();
     ref_frame->setFrame(folder->getIndice(0));
 
@@ -40,7 +51,7 @@ int main()
     tar_frame6->setFrame(folder->getIndice(6));
 
     shared_ptr<PixelSelector> selector = make_shared<PixelSelector>();
-    selector->setParameters(40, 20, 10, 5, 5, 20, 10, 2000, 40000, 1, 10);
+    selector->setParameters(40, 20, 10, 3, 3, 20, 10, 2000, 40000, 1, 1);
     selector->selectKeyPointFromImage(ref_frame);
 
     // for(auto iter = frame->keyPoints[3].begin(); iter != frame->keyPoints[3].end(); iter++)
@@ -49,12 +60,13 @@ int main()
     // }
     // selector->lookKeyPoint(ref_frame);
 
-    selector->selectNormalPointFromImage(ref_frame);
+    // selector->selectNormalPointFromImage(ref_frame);
+    selector->selectNormalPointEvenly(ref_frame);
     // for(auto iter = frame->normalPoints[0].begin(); iter != frame->normalPoints[0].end(); iter++)
     // {
     //     cout << iter->x << " " << iter->y << endl;
     // }
-    // selector->lookNormalPoint(ref_frame);
+    selector->lookNormalPoint(ref_frame);
 
     ref_frame->transformToConcern();
 
@@ -87,37 +99,37 @@ int main()
     trajectoryer->addPoseAndAffineOfTrajectory(2, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     // ref_frame->visualizePointCloudLevel(0);
 
-    // tracker->setTarFrame(tar_frame3);
-    // tracker->optimizeDSO();
-    // // tracker->optimizeRelativePose();
-    // cout << "the third one: " << endl;
-    // cout << tracker->relativaPose.matrix() << endl;
-    // trajectoryer->addPoseAndAffineOfTrajectory(3, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
-    // // ref_frame->visualizePointCloudLevel(0);
+    tracker->setTarFrame(tar_frame3);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    cout << "the third one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
+    trajectoryer->addPoseAndAffineOfTrajectory(3, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    // ref_frame->visualizePointCloudLevel(0);
 
-    // tracker->setTarFrame(tar_frame4);
-    // tracker->optimizeDSO();
-    // // tracker->optimizeRelativePose();
-    // cout << "the forth one: " << endl;
-    // cout << tracker->relativaPose.matrix() << endl;
-    // trajectoryer->addPoseAndAffineOfTrajectory(4, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
-    // // ref_frame->visualizePointCloudLevel(0);
+    tracker->setTarFrame(tar_frame4);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    cout << "the forth one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
+    trajectoryer->addPoseAndAffineOfTrajectory(4, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    // ref_frame->visualizePointCloudLevel(0);
 
-    // tracker->setTarFrame(tar_frame5);
-    // tracker->optimizeDSO();
-    // // tracker->optimizeRelativePose();
-    // trajectoryer->addPoseAndAffineOfTrajectory(5, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
-    // cout << "the fifth one: " << endl;
-    // cout << tracker->relativaPose.matrix() << endl;
+    tracker->setTarFrame(tar_frame5);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    trajectoryer->addPoseAndAffineOfTrajectory(5, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    cout << "the fifth one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
 
-    // tracker->setTarFrame(tar_frame6);
-    // tracker->optimizeDSO();
-    // // tracker->optimizeRelativePose();
-    // trajectoryer->addPoseAndAffineOfTrajectory(6, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
-    // cout << "the sixth one: " << endl;
-    // cout << tracker->relativaPose.matrix() << endl;
+    tracker->setTarFrame(tar_frame6);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    trajectoryer->addPoseAndAffineOfTrajectory(6, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    cout << "the sixth one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
 
-    ref_frame->visualizePointCloudLevel(0);
+    ref_frame->visualizePointCloudLevel(3);
 
     trajectoryer->visualizeTrajectory();
 

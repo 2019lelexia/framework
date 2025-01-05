@@ -27,5 +27,8 @@ public:
     void selectNormalPointFromImage(shared_ptr<Frame> &frame);
     void lookKeyPoint(shared_ptr<Frame> &frame);
     void lookNormalPoint(shared_ptr<Frame> &frame);
+
+    void selectNormalPointEvenly(shared_ptr<Frame> &frame);
+    int gridMaxSelection(shared_ptr<Frame> &Frame, int h, int w, int squareSize, int level, float threshold);
     
 };

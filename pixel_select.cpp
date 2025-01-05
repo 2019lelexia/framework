@@ -236,6 +236,148 @@ void PixelSelector::selectNormalPointFromImage(shared_ptr<Frame> &frame)
     }
 }
 
+void PixelSelector::selectNormalPointEvenly(shared_ptr<Frame> &frame)
+{
+    for(int i = 0; i < LEVEL; i++)
+    {
+        float numDesire = numNormalTotal[i];
+        int initialSquare = 5;
+        float initialThres = thresholdSelectedGradient;
+        while(true)
+        {
+            int tmpNum = gridMaxSelection(frame, hG[i], wG[i], initialSquare, i, thresholdSelectedGradient);
+            // cout << "check2" << endl;
+            float ratio = tmpNum / numDesire;
+            cout << "ratio: " << ratio << ", level: " << i <<", square: " << initialSquare << ", th: " << initialThres << endl;
+            if(ratio > 0.8 && ratio < 1.2)
+            {
+                break;
+            }
+            else
+            {
+                if(initialThres == 0.5 || initialSquare == 11)
+                {
+                    break;
+                }
+                if(initialSquare == 1)
+                {
+                    initialThres = 0.5;
+                }
+                initialSquare = (int)(initialSquare * ratio + 0.5f);
+                if(initialSquare < 1)
+                {
+                    initialSquare = 1;
+                }
+                else if(initialSquare > 11)
+                {
+                    initialSquare == 11;
+                }
+            }
+        }
+        cout << frame->normalPoints.at(i).size() << endl;
+    }
+}
+
+int PixelSelector::gridMaxSelection(shared_ptr<Frame> &frame, int h, int w, int squareSize, int level, float threshold)
+{
+    int numTotal = 0;
+    vector<cv::Point> normalPointsLevel;
+    cv::Mat mask = cv::Mat::zeros(frame->image->pyramids.at(level).size(), CV_8U);
+    
+    cv::Mat gradX = frame->image->dx.at(level);
+    cv::Mat gradY = frame->image->dy.at(level);
+    for(int y = edgeLeaveOutH; y < h - edgeLeaveOutH - squareSize; y += squareSize)
+    {
+        for(int x = edgeLeaveOutW; x < w - edgeLeaveOutW - squareSize; x += squareSize)
+        {
+            int mostGradXID = -1;
+            int mostGradYID = -1;
+            int mostGradX_minus_YID = -1;
+            int mostGradX_plus_YID = -1;
+            float mostGradX = 0;
+            float mostGradY = 0;
+            float mostGradX_minus_Y = 0;
+            float mostGradX_plus_Y = 0;
+            int initialPositionThisSquare = y * w + x;
+            for(int dx = 0; dx < squareSize; dx++)
+            {
+                for(int dy = 0; dy < squareSize; dy++)
+                {
+                    int index = dx + dy * w;
+                    float val = gradX.at<float>(initialPositionThisSquare + index) * gradX.at<float>(initialPositionThisSquare + index) + gradY.at<float>(initialPositionThisSquare + index) * gradY.at<float>(initialPositionThisSquare + index);
+                    float tmpThres = threshold * 7.5f;
+                    
+                    if(val > tmpThres * tmpThres)
+                    {
+                        float tmpGradX = fabs(gradX.at<float>(initialPositionThisSquare + index));
+                        if(tmpGradX > mostGradX)
+                        {
+                            mostGradX = tmpGradX;
+                            mostGradXID = index;
+                        }
+                        float tmpGradY = fabs(gradY.at<float>(initialPositionThisSquare + index));
+                        if(tmpGradY > mostGradY)
+                        {
+                            mostGradY = tmpGradY;
+                            mostGradYID = index;
+                        }
+                        float tmpGradX_minus_Y = fabs(gradX.at<float>(initialPositionThisSquare + index) - gradY.at<float>(initialPositionThisSquare + index));
+                        if(tmpGradX_minus_Y > mostGradX_minus_Y)
+                        {
+                            mostGradX_minus_Y = tmpGradX_minus_Y;
+                            mostGradX_minus_YID = index;
+                        }
+                        float tmpGradX_plus_Y = fabs(gradX.at<float>(initialPositionThisSquare + index) + gradY.at<float>(initialPositionThisSquare + index));
+                        if(tmpGradX_plus_Y > mostGradX_plus_Y)
+                        {
+                            mostGradX_plus_Y = tmpGradX_plus_Y;
+                            mostGradX_plus_YID = index;
+                        }
+                    }
+                }
+            }
+            if(mostGradXID >= 0)
+            {
+                mask.at<uchar>(initialPositionThisSquare + mostGradXID) = 1;
+            }
+            if(mostGradYID >= 0)
+            {
+                mask.at<uchar>(initialPositionThisSquare + mostGradYID) = 1;
+            }
+            if(mostGradX_minus_YID >= 0)
+            {
+                mask.at<uchar>(initialPositionThisSquare + mostGradX_minus_YID) = 1;
+            }
+            if(mostGradX_plus_YID >= 0)
+            {
+                mask.at<uchar>(initialPositionThisSquare + mostGradX_plus_YID) = 1;
+            }
+        }
+    }
+    for(int row = 0; row < h; row++)
+    {
+        for(int col = 0; col < w; col++)
+        {
+            if(mask.at<uchar>(row, col) == 1)
+            {
+                normalPointsLevel.push_back(cv::Point(col, row));
+                numTotal++;
+            }
+        }
+    }
+    if(frame->normalPoints.size() > level)
+    {
+        frame->normalPoints.at(level) = normalPointsLevel;
+        frame->normalPointsMask.at(level) = mask;
+    }
+    else
+    {
+        frame->normalPoints.push_back(normalPointsLevel);
+        frame->normalPointsMask.push_back(mask);
+    }
+    return numTotal;
+}
+
 
 void PixelSelector::lookKeyPoint(shared_ptr<Frame> &frame)
 {

@@ -53,7 +53,7 @@ void Point::setInitialParameters()
     JAlphaT_mul_JAlphaSingleNew = 0;
     JAlphaT_mul_JBetaNew = Vector8f::Zero();
     
-    outlierThreshold = 8 * 12 * 12;
+    outlierThreshold = patternNum * 12 * 12;
 }
 
 float Point::getPositionX()

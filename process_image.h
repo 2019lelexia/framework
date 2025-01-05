@@ -17,6 +17,7 @@ public:
     void setGlobalSize();
     void setGlobalCalibration(float fx, float fy, float cx, float cy);
     void calculateGrad();
+    void calculateGradOrigin();
 
 
 
