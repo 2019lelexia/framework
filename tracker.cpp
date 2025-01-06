@@ -54,7 +54,7 @@ void SingleTracker::setRefFrame(shared_ptr<Frame> _refFrame)
 void SingleTracker::setTarFrame(shared_ptr<Frame> _tarFrame)
 {
     tarFrame = _tarFrame;
-    // relativeAffine = refFrame->affine.deviationAffineLight(refFrame->exposure, tarFrame->exposure, refFrame->affine, tarFrame->affine);
+    relativeAffine = refFrame->affine.deviationAffineLight(refFrame->exposure, tarFrame->exposure, refFrame->affine, tarFrame->affine);
 }
 
 void SingleTracker::setTrajectory(shared_ptr<Trajectory> _trajectoryer)

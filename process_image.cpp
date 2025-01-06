@@ -102,7 +102,9 @@ void ImageInfo::calculateGradOrigin()
     for(int i = 0; i < LEVEL; i++)
     {
         cv::Mat tmp = pyramids.at(i);
-        cv::Mat tmpdx(tmp.size(), CV_32F, cv::Scalar(0)), tmpdy(tmp.size(), CV_32F, cv::Scalar(0)), tmpgrad_2(tmp.size(), CV_32F, cv::Scalar(0));
+        cv::Mat tmpdx = cv::Mat::zeros(tmp.size(), CV_32F);
+        cv::Mat tmpdy = cv::Mat::zeros(tmp.size(), CV_32F);
+        cv::Mat tmpgrad_2 = cv::Mat::zeros(tmp.size(), CV_32F);
         int w = wG[i];
         int h = hG[i];
         for(int index = w; index < w * (h - 1); index++)

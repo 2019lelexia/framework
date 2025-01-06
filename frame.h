@@ -24,7 +24,7 @@ public:
     Vector3f interpolationPixelDxDy(int level, float u, float v);
     float interpolationPixel(int level, float u, float v);
     void makePointCloudFlann();
-    void visualizePointCloudLevel(int level);
+    void visualizePointCloudLevel(int level, const SE3& transform);
     void visualizePointCloudAllLevel();
 
 

@@ -27,10 +27,10 @@ void PixelSelector::setParameters(int _thresholdFast, int _widthGrid, int _heigh
         numKeyTotal.push_back(_numKeyTotal / (i + 1));
         // numNormalTotal.push_back(_numNormalTotal / (2 * i + 1));
     }
+    numNormalTotal.push_back(_numNormalTotal * 0.35);
     numNormalTotal.push_back(_numNormalTotal * 0.3);
     numNormalTotal.push_back(_numNormalTotal * 0.3);
-    numNormalTotal.push_back(_numNormalTotal * 0.3);
-    numNormalTotal.push_back(_numNormalTotal * 0.1);
+    numNormalTotal.push_back(_numNormalTotal * 0.15);
 }
 
 void PixelSelector::selectKeyPointFromImage(shared_ptr<Frame> &frame)

@@ -77,6 +77,8 @@ void SingleTracker::optimizeDSO()
             
             SE3 poseRefToTarNew = SE3::exp(incrementPoseAffine.head<6>().cast<double>()) * poseRefToTarCurrent;
             AffineLight affRefToTarNew = affRefToTarCurrent;
+            affRefToTarNew.a += incrementPoseAffine[6];
+            affRefToTarNew.b += incrementPoseAffine[7];
             probeDepthThisLevelDSO(level, lambda, incrementPoseAffine);
             // exit(1);
             
@@ -940,8 +942,6 @@ Vector3f SingleTracker::incrementalEquationDSO(int level, Matrix8f& Hsc, Vector8
         }
 
         JAlpha_mul_JAlphaSingle2mlNew[count] = 1 / (1 + JAlpha_mul_JAlphaSingle2mlNew[count]);
-        // Hsc += vecJAlphaT_mul_JBeta[count] * vecJAlphaT_mul_JBeta[count].transpose() / (vecJAlphaT_mul_JAlphaSingle[count] + 1);
-        // bsc += vecJAlphaT_mul_JBeta[count] * vecbAlpha[count] / (vecJAlphaT_mul_JAlphaSingle[count] + 1);
         Hsc += JAlpha_mul_JBeta2mlNew[count] * JAlpha_mul_JBeta2mlNew[count].transpose() * JAlpha_mul_JAlphaSingle2mlNew[count];
         bsc += JAlpha_mul_JBeta2mlNew[count] * bAlpha2mlNew[count] * JAlpha_mul_JAlphaSingle2mlNew[count];
     }

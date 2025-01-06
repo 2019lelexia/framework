@@ -50,8 +50,11 @@ int main()
     shared_ptr<Frame> tar_frame6 = make_shared<Frame>();
     tar_frame6->setFrame(folder->getIndice(6));
 
+    shared_ptr<Frame> tar_frame7 = make_shared<Frame>();
+    tar_frame7->setFrame(folder->getIndice(7));
+
     shared_ptr<PixelSelector> selector = make_shared<PixelSelector>();
-    selector->setParameters(40, 20, 10, 3, 3, 20, 10, 2000, 40000, 1, 1);
+    selector->setParameters(40, 20, 10, 3, 3, 20, 10, 2000, 50000, 1, 1);
     selector->selectKeyPointFromImage(ref_frame);
 
     // for(auto iter = frame->keyPoints[3].begin(); iter != frame->keyPoints[3].end(); iter++)
@@ -129,7 +132,14 @@ int main()
     cout << "the sixth one: " << endl;
     cout << tracker->relativaPose.matrix() << endl;
 
-    ref_frame->visualizePointCloudLevel(3);
+    tracker->setTarFrame(tar_frame7);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    trajectoryer->addPoseAndAffineOfTrajectory(7, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    cout << "the seventh one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
+
+    ref_frame->visualizePointCloudLevel(3, tracker->relativaPose);
 
     trajectoryer->visualizeTrajectory();
 

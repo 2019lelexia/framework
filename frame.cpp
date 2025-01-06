@@ -175,7 +175,7 @@ void Frame::makePointCloudFlann()
     }
 }
 
-void Frame::visualizePointCloudLevel(int level)
+void Frame::visualizePointCloudLevel(int level, const SE3& transform)
 {
     shared_ptr<pcl::PointCloud<pcl::PointXYZ>> pointcloud = make_shared<pcl::PointCloud<pcl::PointXYZ>>();
     float fxL = fxG[level];
@@ -187,7 +187,10 @@ void Frame::visualizePointCloudLevel(int level)
         float d = 1 / point->depthNew;
         float x = (point->getPositionX() - cxL) * d / fxL;
         float y = (point->getPositionY() - cyL) * d / fyL;
-        pointcloud->points.emplace_back(x, y, d);
+        Eigen::Vector4d tmpPoint(x, y, d, 1.0);
+        Eigen::Vector4d pointHomogeneous = transform.matrix() * tmpPoint;
+        pointcloud->points.emplace_back(pointHomogeneous[0], pointHomogeneous[1], pointHomogeneous[2]);
+        // pointcloud->points.emplace_back(x, y, d);
     }
     shared_ptr<pcl::visualization::PCLVisualizer> viewer = make_shared<pcl::visualization::PCLVisualizer>("point cloud viewer");
     viewer->getRenderWindow()->GlobalWarningDisplayOff();
