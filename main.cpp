@@ -15,8 +15,9 @@ int main()
     // image->calculateGrad();
     // cout << image->dx[2].at<float>(10, 20) << endl;
 
-    shared_ptr<ImageFolder> folder = make_shared<ImageFolder>("./", "../calibration/kitti.xml");
+    shared_ptr<ImageFolder> folder = make_shared<ImageFolder>("./", "../calibration/kitti.xml", "./times.txt");
     folder->readImageFolder();
+    folder->readTimestamps();
 
     pattern.emplace_back(0, 0);
     pattern.emplace_back(2, 0);
@@ -53,8 +54,17 @@ int main()
     shared_ptr<Frame> tar_frame7 = make_shared<Frame>();
     tar_frame7->setFrame(folder->getIndice(7));
 
+    shared_ptr<Frame> tar_frame8 = make_shared<Frame>();
+    tar_frame8->setFrame(folder->getIndice(8));
+
+    shared_ptr<Frame> tar_frame9 = make_shared<Frame>();
+    tar_frame9->setFrame(folder->getIndice(9));
+
+    shared_ptr<Frame> tar_frame10 = make_shared<Frame>();
+    tar_frame10->setFrame(folder->getIndice(10));
+
     shared_ptr<PixelSelector> selector = make_shared<PixelSelector>();
-    selector->setParameters(40, 20, 10, 3, 3, 20, 10, 2000, 50000, 1, 1);
+    selector->setParameters(40, 20, 10, 3, 3, 20, 10, 2000, 40000, 1, 1);
     selector->selectKeyPointFromImage(ref_frame);
 
     // for(auto iter = frame->keyPoints[3].begin(); iter != frame->keyPoints[3].end(); iter++)
@@ -136,6 +146,27 @@ int main()
     tracker->optimizeDSO();
     // tracker->optimizeRelativePose();
     trajectoryer->addPoseAndAffineOfTrajectory(7, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    cout << "the seventh one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
+
+    tracker->setTarFrame(tar_frame8);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    trajectoryer->addPoseAndAffineOfTrajectory(8, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    cout << "the seventh one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
+
+    tracker->setTarFrame(tar_frame9);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    trajectoryer->addPoseAndAffineOfTrajectory(9, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
+    cout << "the seventh one: " << endl;
+    cout << tracker->relativaPose.matrix() << endl;
+
+    tracker->setTarFrame(tar_frame10);
+    tracker->optimizeDSO();
+    // tracker->optimizeRelativePose();
+    trajectoryer->addPoseAndAffineOfTrajectory(10, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     cout << "the seventh one: " << endl;
     cout << tracker->relativaPose.matrix() << endl;
 

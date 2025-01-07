@@ -86,6 +86,7 @@
         "strstream": "cpp",
         "future": "cpp",
         "cfenv": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "filesystem": "cpp"
     }
 }

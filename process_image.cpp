@@ -130,7 +130,7 @@ void ImageInfo::calculateGradOrigin()
 }
 
 
-ImageFolder::ImageFolder(string path_folder, string path_calibration): pathFolder(path_folder), pathCalibration(path_calibration), totalSize(0)
+ImageFolder::ImageFolder(string path_folder, string path_calibration, string path_timestamps): pathFolder(path_folder), pathCalibration(path_calibration), pathTimestamps(path_timestamps), totalSize(0)
 {}
 
 ImageFolder::~ImageFolder()
@@ -164,6 +164,7 @@ void ImageFolder::readImageFolder()
             }
             ptr_imageInfo->setGlobalCalibration(fs["fx"], fs["fy"], fs["cx"], fs["cy"]);
             ptr_imageInfo->setGlobalSize();
+            fs.release();
         }
         ptr_imageInfo->calculateGradOrigin();
         album.push_back(ptr_imageInfo);
@@ -171,6 +172,22 @@ void ImageFolder::readImageFolder()
         totalSize++;
     }
     assert(album.size() == totalSize);
+}
+
+void ImageFolder::readTimestamps()
+{
+    ifstream file(pathTimestamps);
+    if(!file.is_open())
+    {
+        cerr << "Failed to open the timestamps file." << endl;
+        return;
+    }
+    double timestamp;
+    while(file >> timestamp)
+    {
+        timestamps.push_back(timestamp);
+    }
+    file.close();
 }
 
 shared_ptr<ImageInfo> ImageFolder::getIndice(int index)

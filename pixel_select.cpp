@@ -249,7 +249,7 @@ void PixelSelector::selectNormalPointEvenly(shared_ptr<Frame> &frame)
             // cout << "check2" << endl;
             float ratio = tmpNum / numDesire;
             cout << "ratio: " << ratio << ", level: " << i <<", square: " << initialSquare << ", th: " << initialThres << endl;
-            if(ratio > 0.8 && ratio < 1.2)
+            if(ratio > 0.75 && ratio < 1.25)
             {
                 break;
             }

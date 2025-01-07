@@ -4,4 +4,17 @@
     <fy>707.0912</fy>
     <cx>601.8873</cx>
     <cy>183.1104</cy>
+    <T_cam_imu type="opencv-matrix" rows="4" cols="4">
+        0.007812975034877 -0.004279198937278 0.999960328830788 1.143898705755428
+        -0.999859471889100 -0.014868047055430 0.007748560274678 -0.312718471250709
+        0.014834296219918 -0.999880225756999 -0.004394761501373 0.726546045493978
+        0.0 0.0 0.0 1.0
+    </T_cam_imu>
+    <imu>
+        <accelerometer_noise_density>0.2</accelerometer_noise_density>
+        <gyroscope_noise_density>0.016968</gyroscope_noise_density>
+        <accelerometer_random_walk>0.005</accelerometer_random_walk>
+        <gyroscope_random_walk>0.003491</gyroscope_random_walk>
+        <integration_sigma>0.316227</integration_sigma>
+    </imu>
 </opencv_storage>

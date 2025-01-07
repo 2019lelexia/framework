@@ -30,15 +30,18 @@ public:
 class ImageFolder
 {
 public:
-    ImageFolder(string path_folder, string path_calibration);
+    ImageFolder(string path_folder, string path_calibration, string path_timestamps);
     ~ImageFolder();
     void readImageFolder();
+    void readTimestamps();
     shared_ptr<ImageInfo> getIndice(int index);
 
 
     string pathFolder;
     string pathCalibration;
+    string pathTimestamps;
     vector<shared_ptr<ImageInfo>> album;
+    vector<double> timestamps;
     vector<int> ids;
     int totalSize;
 };
