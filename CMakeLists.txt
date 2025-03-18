@@ -23,6 +23,9 @@ file(GLOB SOURCES
     trackerDSO.cpp
     tracker2ml.cpp
     trajectory.cpp
+    immature_point.cpp
+    map.cpp
+    map_point.cpp
 )
 
 include_directories(${OpenCV_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS} "/usr/local/include/fmt")

@@ -3,6 +3,8 @@
 #include "pixel_select.h"
 #include "tracker.h"
 #include "trajectory.h"
+#include "map_point.h"
+#include "map.h"
 
 
 
@@ -54,15 +56,6 @@ int main()
     shared_ptr<Frame> tar_frame7 = make_shared<Frame>();
     tar_frame7->setFrame(folder->getIndice(7));
 
-    shared_ptr<Frame> tar_frame8 = make_shared<Frame>();
-    tar_frame8->setFrame(folder->getIndice(8));
-
-    shared_ptr<Frame> tar_frame9 = make_shared<Frame>();
-    tar_frame9->setFrame(folder->getIndice(9));
-
-    shared_ptr<Frame> tar_frame10 = make_shared<Frame>();
-    tar_frame10->setFrame(folder->getIndice(10));
-
     shared_ptr<PixelSelector> selector = make_shared<PixelSelector>();
     selector->setParameters(40, 20, 10, 3, 3, 20, 10, 2000, 40000, 1, 1);
     selector->selectKeyPointFromImage(ref_frame);
@@ -84,7 +77,7 @@ int main()
     ref_frame->transformToConcern();
 
     shared_ptr<Trajectory> trajectoryer = make_shared<Trajectory>();
-
+    shared_ptr<Map> globalMap = make_shared<Map>();
     shared_ptr<SingleTracker> tracker = make_shared<SingleTracker>();
     tracker->setTrajectory(trajectoryer);
     // cout << tracker->relativaPose.matrix() << endl;
@@ -108,7 +101,7 @@ int main()
     // tracker->optimizeRelativePose();
     // tracker->optimizeRelativePose2ml();
     cout << "the second one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
+    // cout << tracker->relativaPose.matrix() << endl;
     trajectoryer->addPoseAndAffineOfTrajectory(2, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     // ref_frame->visualizePointCloudLevel(0);
 
@@ -116,7 +109,7 @@ int main()
     tracker->optimizeDSO();
     // tracker->optimizeRelativePose();
     cout << "the third one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
+    // cout << tracker->relativaPose.matrix() << endl;
     trajectoryer->addPoseAndAffineOfTrajectory(3, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     // ref_frame->visualizePointCloudLevel(0);
 
@@ -124,7 +117,7 @@ int main()
     tracker->optimizeDSO();
     // tracker->optimizeRelativePose();
     cout << "the forth one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
+    // cout << tracker->relativaPose.matrix() << endl;
     trajectoryer->addPoseAndAffineOfTrajectory(4, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     // ref_frame->visualizePointCloudLevel(0);
 
@@ -133,46 +126,82 @@ int main()
     // tracker->optimizeRelativePose();
     trajectoryer->addPoseAndAffineOfTrajectory(5, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     cout << "the fifth one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
+    // cout << tracker->relativaPose.matrix() << endl;
 
     tracker->setTarFrame(tar_frame6);
     tracker->optimizeDSO();
     // tracker->optimizeRelativePose();
     trajectoryer->addPoseAndAffineOfTrajectory(6, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     cout << "the sixth one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
+    // cout << tracker->relativaPose.matrix() << endl;
 
     tracker->setTarFrame(tar_frame7);
     tracker->optimizeDSO();
     // tracker->optimizeRelativePose();
     trajectoryer->addPoseAndAffineOfTrajectory(7, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
     cout << "the seventh one: " << endl;
+    cout << tracker->positionMutation << endl;
     cout << tracker->relativaPose.matrix() << endl;
 
-    tracker->setTarFrame(tar_frame8);
-    tracker->optimizeDSO();
-    // tracker->optimizeRelativePose();
-    trajectoryer->addPoseAndAffineOfTrajectory(8, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
-    cout << "the seventh one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
+    if(tracker->positionMutation >= 5)
+    {
+        tracker->finishInitialization = true;
+    }
+    if(tracker->finishInitialization)
+    {
+        trajectoryer->trackingFrames.push_back(ref_frame);
+        float totalDepth = 1e-5;
+        float totalNumber = 1e-5;
+        for(auto iter = ref_frame->concernNormalPoints.at(0).begin(); iter != ref_frame->concernNormalPoints.at(0).end(); iter++)
+        {
+            shared_ptr<Point> ptr_point = (*iter);
+            totalDepth += ptr_point->depthConvergence;
+            totalNumber += 1;
+        }
+        float scaleFactor = 1 / (totalDepth / totalNumber);
+        float selectPercentage = initializationTransformNum / ref_frame->concernNormalPoints.at(0).size();
+        cout << "initialization over, now transform initial points into map point." << endl << "We keep " << selectPercentage * 100 << "\% points here." << endl;
+        for(auto iter = ref_frame->concernNormalPoints.at(0).begin(); iter != ref_frame->concernNormalPoints.at(0).end(); iter++)
+        {
+            if(rand() / (float) RAND_MAX > selectPercentage)
+            {
+                continue;
+            }
+            shared_ptr<Point> ptr_point = (*iter);
+            shared_ptr<MapPoint> ptr_mappoint = make_shared<MapPoint>(ref_frame, (float)ptr_point->positionX, (float)ptr_point->positionY);
+            ptr_mappoint->immaturePoint = make_shared<Immature>(ref_frame, ptr_mappoint);
+            if(!isfinite(ptr_mappoint->immaturePoint->energyTH))
+            {
+                ptr_mappoint->immaturePoint->map_point = nullptr;
+                ptr_mappoint->immaturePoint = nullptr;
+                continue;
+            }
+            ptr_mappoint->createFromImmaturePoint();
+            if(!isfinite(ptr_mappoint->energyTH))
+            {
+                ptr_mappoint->deleteThisPoint();
+                continue;
+            }
+            ref_frame->mapPoints.push_back(ptr_mappoint);
+            ptr_mappoint->setDepthScaled(ptr_point->depthConvergence * scaleFactor);
+            ptr_mappoint->setDepthZero(ptr_mappoint->depth);
+            ptr_mappoint->ownDepthPrior = true;
+            ptr_mappoint->stateOptimize = MapPoint::PointStatus::ACTIVE;
+            ptr_mappoint->delta = ptr_mappoint->depth - ptr_mappoint->depthZero;
+        }
+        SE3 initialToNew = tracker->relativaPose;
+        initialToNew.translation() /= scaleFactor;
+        ref_frame->setPoseAndStateScaledInitially(ref_frame->Tw_to_c, ref_frame->affine);
+        tar_frame7->Tw_to_c = initialToNew;
+        tar_frame7->setPoseAndStateScaledInitially(tar_frame7->Tw_to_c, tar_frame7->affine);
+        
+        globalMap->addKeyFrameToMap(ref_frame);
+        cout << "initialization is all over" << endl;
+    }
 
-    tracker->setTarFrame(tar_frame9);
-    tracker->optimizeDSO();
-    // tracker->optimizeRelativePose();
-    trajectoryer->addPoseAndAffineOfTrajectory(9, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
-    cout << "the seventh one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
+    // ref_frame->visualizePointCloudLevel(3, tracker->relativaPose);
 
-    tracker->setTarFrame(tar_frame10);
-    tracker->optimizeDSO();
-    // tracker->optimizeRelativePose();
-    trajectoryer->addPoseAndAffineOfTrajectory(10, tracker->relativaPose, AffineLight(tracker->relativeAffine[0], tracker->relativeAffine[1]));
-    cout << "the seventh one: " << endl;
-    cout << tracker->relativaPose.matrix() << endl;
-
-    ref_frame->visualizePointCloudLevel(3, tracker->relativaPose);
-
-    trajectoryer->visualizeTrajectory();
+    // trajectoryer->visualizeTrajectory();
 
     return 0;
     

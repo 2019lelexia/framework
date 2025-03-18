@@ -21,6 +21,9 @@ typedef Eigen::Vector3d Vector3d;
 typedef Eigen::Matrix<float, 8, 1> Vector8f;
 typedef Eigen::Matrix<double, 8, 1> Vector8d;
 
+typedef Eigen::Matrix<double, 2, 2> Matrix2d;
+typedef Eigen::Matrix<float, 2, 2> Matrix2f;
+
 typedef Eigen::Matrix<double, 3, 3> Matrix3d;
 typedef Eigen::Matrix<float, 3, 3> Matrix3f;
 
@@ -29,3 +32,15 @@ typedef Eigen::Matrix<float, 10, 1> Vector10f;
 
 typedef Eigen::Matrix<float, 8, 8> Matrix8f;
 typedef Eigen::Matrix<double, 8, 8> Matrix8d;
+
+typedef Eigen::Matrix<double, 10, 1> Vector10d;
+typedef Eigen::Matrix<float, 10, 1> Vector10f;
+
+typedef Eigen::Matrix<double, 6, 1> Vector6d;
+typedef Eigen::Matrix<float, 6, 1> Vector6f;
+
+typedef Eigen::Matrix<double, 6, 6> Matrix6d;
+typedef Eigen::Matrix<float, 6, 6> Matrix6f;
+
+typedef Eigen::Matrix<double, 4, 2> Matrix42d;
+typedef Eigen::Matrix<float, 4, 2> Matrix42f;

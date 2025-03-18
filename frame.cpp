@@ -1,6 +1,8 @@
 #include "frame.h"
 
-Frame::Frame()
+int Frame::global_id = 0;
+
+Frame::Frame() : id(global_id++)
 {
     for(int i = 0; i < LEVEL; i++)
     {
@@ -63,6 +65,28 @@ void Frame::transformToConcern()
         concernNormalPoints.push_back(pointsLevel);
         numPoints.at(i) += concernNormalPoints.at(i).size();
     }
+}
+
+Vector3f Frame::interpolationPixelAndCalculateDxDy(int level, float u, float v)
+{
+    int x1 = (int)(u);
+    int y1 = (int)(v);
+    int x2 = min(x1 + 1, wG[level] - 1);
+    int y2 = min(y1 + 1, hG[level] - 1);
+    float dx = u - x1;
+    float dy = v - y1;
+
+    float q11(image->pyramids.at(level).at<float>(y1, x1));
+    float q12(image->pyramids.at(level).at<float>(y1, x2));
+    float q21(image->pyramids.at(level).at<float>(y2, x1));
+    float q22(image->pyramids.at(level).at<float>(y2, x2));
+
+    float topEdge = (1 - dx) * q11 + dx * q12;
+    float bottomEdge = (1 - dx) * q21 + dx * q22;
+    float leftEdge = (1 - dy) * q11 + dy * q21;
+    float rightEdge = (1 - dy) * q21 + dy * q22;
+    
+    return Vector3f((1 - dx) * leftEdge + dx * rightEdge, rightEdge - leftEdge, bottomEdge - topEdge);
 }
 
 Vector3f Frame::interpolationPixelDxDy(int level, float u, float v)
@@ -245,4 +269,76 @@ void Frame::visualizePointCloudAllLevel()
     {
         viewer->spinOnce(100);
     }
+}
+
+void Frame::setState(const Vector10d &_state)
+{
+    state = _state;
+    stateScaled.segment<3>(0) = 0.5 * state.segment<3>(0);
+    stateScaled.segment<3>(3) = 1.0 * state.segment<3>(3);
+    stateScaled[6] = 10.0 * state[6];
+    stateScaled[7] = 1000.0 * state[7];
+    stateScaled[8] = 10.0 * state[8];
+    stateScaled[9] = 1000.0 * state[9];
+    precalculate_Tw_to_c = SE3::exp(stateScaled.head<6>()) * world_to_cam_linear;
+    precalculate_Tc_to_w = precalculate_Tw_to_c.inverse();
+}
+
+void Frame::setStateScaled(const Vector10d &_stateScaled)
+{
+    stateScaled = _stateScaled;
+    state.segment<3>(0) = 2.0 * stateScaled.segment<3>(0);
+    state.segment<3>(3) = 1.0 * stateScaled.segment<3>(3);
+    state[6] = (1 / 10.0) * stateScaled[6];
+    state[7] = (1 / 1000.0) * stateScaled[7];
+    state[8] = (1 / 10.0) * stateScaled[8];
+    state[9] = (1 / 1000.0) * stateScaled[9];
+
+    precalculate_Tw_to_c = SE3::exp(stateScaled.head<6>()) * world_to_cam_linear;
+    precalculate_Tc_to_w = precalculate_Tw_to_c.inverse();
+}
+
+void Frame::setStateZero(const Vector10d &_state_zero)
+{
+    assert(_state_zero.head<6>().squaredNorm() < 1e-20);
+    stateZero = _state_zero;
+    for(int i = 0; i < 6; i++)
+    {
+        Vector6d perturbation;
+        perturbation.setZero();
+        perturbation[i] = 1e-3;
+        SE3 perturbation_positive = SE3::exp(perturbation);
+        SE3 perturbation_negative = SE3::exp(-perturbation);
+        SE3 world_to_cam_linear_positive_perturb_increment = (world_to_cam_linear * perturbation_positive) * world_to_cam_linear.inverse();
+        SE3 world_to_cam_linear_negative_perturb_increment = (world_to_cam_linear * perturbation_negative) * world_to_cam_linear.inverse();
+        nullspacePose.col(i) = (world_to_cam_linear_positive_perturb_increment.log() - world_to_cam_linear_negative_perturb_increment.log()) / 2e-3;
+    }
+    SE3 world_to_cam_linear_for_positive_scale = world_to_cam_linear;
+    world_to_cam_linear_for_positive_scale.translation() *= 1.00001;
+    world_to_cam_linear_for_positive_scale = world_to_cam_linear_for_positive_scale * world_to_cam_linear.inverse();
+    SE3 world_to_cam_linear_for_negative_scale = world_to_cam_linear;
+    world_to_cam_linear_for_negative_scale.translation() /= 1.00001;
+    world_to_cam_linear_for_negative_scale = world_to_cam_linear_for_negative_scale * world_to_cam_linear.inverse();
+    nullspaceScale = (world_to_cam_linear_for_positive_scale.log() - world_to_cam_linear_for_negative_scale.log()) / 2e-4;
+    nullspaceAffine.setZero();
+    nullspaceAffine.topLeftCorner<2, 1>() = Vector2d(1, 0);
+    assert(exposure > 0);
+    nullspaceAffine.topRightCorner<2, 1>() = Vector2d(0, expf(stateZero[6] * 10.0) * exposure);
+}
+
+void Frame::setPoseAndState(const SE3 &_Tw_to_c, const Vector10d &_state)
+{
+    world_to_cam_linear = _Tw_to_c;
+    setState(_state);
+    setStateZero(_state);
+}
+void Frame::setPoseAndStateScaledInitially(const SE3 &_Tw_to_c, const AffineLight &_affine)
+{
+    Vector10d initial_state = Vector10d::Zero();
+    initial_state[6] = _affine.a;
+    initial_state[7] = _affine.b;
+    
+    world_to_cam_linear = _Tw_to_c;
+    setStateScaled(initial_state);
+    setStateZero(state);
 }

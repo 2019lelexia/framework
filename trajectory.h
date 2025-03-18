@@ -14,6 +14,7 @@ public:
     void addPoseAndAffineOfTrajectory(int _idFrame, SE3 _poseOfThisFrame, AffineLight _affineThisFrame);
     void visualizeTrajectory();
 
+    vector<shared_ptr<Frame>> trackingFrames;
     vector<int> idFrames;
     vector<SE3> posesFrame;
     vector<AffineLight> affinesFrame;

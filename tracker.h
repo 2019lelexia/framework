@@ -83,6 +83,7 @@ public:
     float couplingWeight;
     bool mutation;
     int positionMutation;
+    bool finishInitialization;
     vector<int> maxIterations;
 
 

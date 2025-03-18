@@ -45,6 +45,7 @@ void SingleTracker::setRefFrame(shared_ptr<Frame> _refFrame)
     refFrame = _refFrame;
     mutation = false;
     positionMutation = 0;
+    finishInitialization = false;
     maxIterations.push_back(5);
     maxIterations.push_back(5);
     maxIterations.push_back(10);

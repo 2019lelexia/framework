@@ -87,6 +87,7 @@
         "future": "cpp",
         "cfenv": "cpp",
         "valarray": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "__locale": "cpp"
     }
 }

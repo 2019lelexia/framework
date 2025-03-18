@@ -1,5 +1,6 @@
 #pragma once
 #define LEVEL 4
+#define PATTERNNUMFORINDEX 8
 #include <vector>
 #include "types.h"
 using namespace std;
@@ -18,3 +19,6 @@ extern vector<pair<int, int>> pattern;
 extern int patternNum;
 extern int huberThreshold;
 extern float initializationDropThreshold;
+extern float initializationTransformNum;
+extern float outlierEnergyThreshold;
+extern float setting_idepthFixPrior;
