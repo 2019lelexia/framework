@@ -683,6 +683,8 @@ CMakeFiles/framework.dir/tracker.cpp.o: \
  /usr/include/c++/11/bits/std_thread.h /usr/include/c++/11/unordered_set \
  /usr/include/c++/11/bits/unordered_set.h \
  /home/zml/desktop/framework/light_affine.h \
+ /home/zml/desktop/framework/map_point.h \
+ /home/zml/desktop/framework/immature_point.h \
  /usr/local/include/pcl-1.14/pcl/point_cloud.h \
  /usr/local/include/eigen3/Eigen/StdVector \
  /usr/local/include/eigen3/Eigen/Geometry \

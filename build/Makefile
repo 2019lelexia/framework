@@ -251,6 +251,30 @@ global_params.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/global_params.cpp.s
 .PHONY : global_params.cpp.s
 
+immature_point.o: immature_point.cpp.o
+.PHONY : immature_point.o
+
+# target to build an object file
+immature_point.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/immature_point.cpp.o
+.PHONY : immature_point.cpp.o
+
+immature_point.i: immature_point.cpp.i
+.PHONY : immature_point.i
+
+# target to preprocess a source file
+immature_point.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/immature_point.cpp.i
+.PHONY : immature_point.cpp.i
+
+immature_point.s: immature_point.cpp.s
+.PHONY : immature_point.s
+
+# target to generate assembly for a file
+immature_point.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/immature_point.cpp.s
+.PHONY : immature_point.cpp.s
+
 light_affine.o: light_affine.cpp.o
 .PHONY : light_affine.o
 
@@ -298,6 +322,54 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+map.o: map.cpp.o
+.PHONY : map.o
+
+# target to build an object file
+map.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/map.cpp.o
+.PHONY : map.cpp.o
+
+map.i: map.cpp.i
+.PHONY : map.i
+
+# target to preprocess a source file
+map.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/map.cpp.i
+.PHONY : map.cpp.i
+
+map.s: map.cpp.s
+.PHONY : map.s
+
+# target to generate assembly for a file
+map.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/map.cpp.s
+.PHONY : map.cpp.s
+
+map_point.o: map_point.cpp.o
+.PHONY : map_point.o
+
+# target to build an object file
+map_point.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/map_point.cpp.o
+.PHONY : map_point.cpp.o
+
+map_point.i: map_point.cpp.i
+.PHONY : map_point.i
+
+# target to preprocess a source file
+map_point.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/map_point.cpp.i
+.PHONY : map_point.cpp.i
+
+map_point.s: map_point.cpp.s
+.PHONY : map_point.s
+
+# target to generate assembly for a file
+map_point.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/framework.dir/build.make CMakeFiles/framework.dir/map_point.cpp.s
+.PHONY : map_point.cpp.s
 
 pixel_select.o: pixel_select.cpp.o
 .PHONY : pixel_select.o
@@ -490,12 +562,21 @@ help:
 	@echo "... global_params.o"
 	@echo "... global_params.i"
 	@echo "... global_params.s"
+	@echo "... immature_point.o"
+	@echo "... immature_point.i"
+	@echo "... immature_point.s"
 	@echo "... light_affine.o"
 	@echo "... light_affine.i"
 	@echo "... light_affine.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... map.o"
+	@echo "... map.i"
+	@echo "... map.s"
+	@echo "... map_point.o"
+	@echo "... map_point.i"
+	@echo "... map_point.s"
 	@echo "... pixel_select.o"
 	@echo "... pixel_select.i"
 	@echo "... pixel_select.s"

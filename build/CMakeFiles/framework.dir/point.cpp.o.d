@@ -677,6 +677,8 @@ CMakeFiles/framework.dir/point.cpp.o: \
  /usr/include/c++/11/codecvt /usr/include/c++/11/bits/fs_dir.h \
  /usr/include/c++/11/bits/fs_ops.h \
  /home/zml/desktop/framework/light_affine.h \
+ /home/zml/desktop/framework/map_point.h \
+ /home/zml/desktop/framework/immature_point.h \
  /home/zml/desktop/framework/nanoflann.hpp /usr/include/c++/11/future \
  /usr/include/c++/11/condition_variable \
  /usr/include/c++/11/bits/atomic_futex.h \

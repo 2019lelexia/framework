@@ -111,10 +111,24 @@ CMakeFiles/framework.dir/global_params.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/framework.dir/global_params.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zml/desktop/framework/global_params.cpp -o CMakeFiles/framework.dir/global_params.cpp.s
 
+CMakeFiles/framework.dir/immature_point.cpp.o: CMakeFiles/framework.dir/flags.make
+CMakeFiles/framework.dir/immature_point.cpp.o: /home/zml/desktop/framework/immature_point.cpp
+CMakeFiles/framework.dir/immature_point.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/framework.dir/immature_point.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/immature_point.cpp.o -MF CMakeFiles/framework.dir/immature_point.cpp.o.d -o CMakeFiles/framework.dir/immature_point.cpp.o -c /home/zml/desktop/framework/immature_point.cpp
+
+CMakeFiles/framework.dir/immature_point.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/framework.dir/immature_point.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zml/desktop/framework/immature_point.cpp > CMakeFiles/framework.dir/immature_point.cpp.i
+
+CMakeFiles/framework.dir/immature_point.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/framework.dir/immature_point.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zml/desktop/framework/immature_point.cpp -o CMakeFiles/framework.dir/immature_point.cpp.s
+
 CMakeFiles/framework.dir/light_affine.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/light_affine.cpp.o: /home/zml/desktop/framework/light_affine.cpp
 CMakeFiles/framework.dir/light_affine.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/framework.dir/light_affine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/framework.dir/light_affine.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/light_affine.cpp.o -MF CMakeFiles/framework.dir/light_affine.cpp.o.d -o CMakeFiles/framework.dir/light_affine.cpp.o -c /home/zml/desktop/framework/light_affine.cpp
 
 CMakeFiles/framework.dir/light_affine.cpp.i: cmake_force
@@ -125,10 +139,38 @@ CMakeFiles/framework.dir/light_affine.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/framework.dir/light_affine.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zml/desktop/framework/light_affine.cpp -o CMakeFiles/framework.dir/light_affine.cpp.s
 
+CMakeFiles/framework.dir/map.cpp.o: CMakeFiles/framework.dir/flags.make
+CMakeFiles/framework.dir/map.cpp.o: /home/zml/desktop/framework/map.cpp
+CMakeFiles/framework.dir/map.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/framework.dir/map.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/map.cpp.o -MF CMakeFiles/framework.dir/map.cpp.o.d -o CMakeFiles/framework.dir/map.cpp.o -c /home/zml/desktop/framework/map.cpp
+
+CMakeFiles/framework.dir/map.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/framework.dir/map.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zml/desktop/framework/map.cpp > CMakeFiles/framework.dir/map.cpp.i
+
+CMakeFiles/framework.dir/map.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/framework.dir/map.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zml/desktop/framework/map.cpp -o CMakeFiles/framework.dir/map.cpp.s
+
+CMakeFiles/framework.dir/map_point.cpp.o: CMakeFiles/framework.dir/flags.make
+CMakeFiles/framework.dir/map_point.cpp.o: /home/zml/desktop/framework/map_point.cpp
+CMakeFiles/framework.dir/map_point.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/framework.dir/map_point.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/map_point.cpp.o -MF CMakeFiles/framework.dir/map_point.cpp.o.d -o CMakeFiles/framework.dir/map_point.cpp.o -c /home/zml/desktop/framework/map_point.cpp
+
+CMakeFiles/framework.dir/map_point.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/framework.dir/map_point.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zml/desktop/framework/map_point.cpp > CMakeFiles/framework.dir/map_point.cpp.i
+
+CMakeFiles/framework.dir/map_point.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/framework.dir/map_point.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zml/desktop/framework/map_point.cpp -o CMakeFiles/framework.dir/map_point.cpp.s
+
 CMakeFiles/framework.dir/pixel_select.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/pixel_select.cpp.o: /home/zml/desktop/framework/pixel_select.cpp
 CMakeFiles/framework.dir/pixel_select.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/framework.dir/pixel_select.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/framework.dir/pixel_select.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/pixel_select.cpp.o -MF CMakeFiles/framework.dir/pixel_select.cpp.o.d -o CMakeFiles/framework.dir/pixel_select.cpp.o -c /home/zml/desktop/framework/pixel_select.cpp
 
 CMakeFiles/framework.dir/pixel_select.cpp.i: cmake_force
@@ -142,7 +184,7 @@ CMakeFiles/framework.dir/pixel_select.cpp.s: cmake_force
 CMakeFiles/framework.dir/point.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/point.cpp.o: /home/zml/desktop/framework/point.cpp
 CMakeFiles/framework.dir/point.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/framework.dir/point.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/framework.dir/point.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/point.cpp.o -MF CMakeFiles/framework.dir/point.cpp.o.d -o CMakeFiles/framework.dir/point.cpp.o -c /home/zml/desktop/framework/point.cpp
 
 CMakeFiles/framework.dir/point.cpp.i: cmake_force
@@ -156,7 +198,7 @@ CMakeFiles/framework.dir/point.cpp.s: cmake_force
 CMakeFiles/framework.dir/process_image.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/process_image.cpp.o: /home/zml/desktop/framework/process_image.cpp
 CMakeFiles/framework.dir/process_image.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/framework.dir/process_image.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/framework.dir/process_image.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/process_image.cpp.o -MF CMakeFiles/framework.dir/process_image.cpp.o.d -o CMakeFiles/framework.dir/process_image.cpp.o -c /home/zml/desktop/framework/process_image.cpp
 
 CMakeFiles/framework.dir/process_image.cpp.i: cmake_force
@@ -170,7 +212,7 @@ CMakeFiles/framework.dir/process_image.cpp.s: cmake_force
 CMakeFiles/framework.dir/tracker.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/tracker.cpp.o: /home/zml/desktop/framework/tracker.cpp
 CMakeFiles/framework.dir/tracker.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/framework.dir/tracker.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/framework.dir/tracker.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/tracker.cpp.o -MF CMakeFiles/framework.dir/tracker.cpp.o.d -o CMakeFiles/framework.dir/tracker.cpp.o -c /home/zml/desktop/framework/tracker.cpp
 
 CMakeFiles/framework.dir/tracker.cpp.i: cmake_force
@@ -184,7 +226,7 @@ CMakeFiles/framework.dir/tracker.cpp.s: cmake_force
 CMakeFiles/framework.dir/tracker2ml.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/tracker2ml.cpp.o: /home/zml/desktop/framework/tracker2ml.cpp
 CMakeFiles/framework.dir/tracker2ml.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/framework.dir/tracker2ml.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/framework.dir/tracker2ml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/tracker2ml.cpp.o -MF CMakeFiles/framework.dir/tracker2ml.cpp.o.d -o CMakeFiles/framework.dir/tracker2ml.cpp.o -c /home/zml/desktop/framework/tracker2ml.cpp
 
 CMakeFiles/framework.dir/tracker2ml.cpp.i: cmake_force
@@ -198,7 +240,7 @@ CMakeFiles/framework.dir/tracker2ml.cpp.s: cmake_force
 CMakeFiles/framework.dir/trackerDSO.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/trackerDSO.cpp.o: /home/zml/desktop/framework/trackerDSO.cpp
 CMakeFiles/framework.dir/trackerDSO.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/framework.dir/trackerDSO.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/framework.dir/trackerDSO.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/trackerDSO.cpp.o -MF CMakeFiles/framework.dir/trackerDSO.cpp.o.d -o CMakeFiles/framework.dir/trackerDSO.cpp.o -c /home/zml/desktop/framework/trackerDSO.cpp
 
 CMakeFiles/framework.dir/trackerDSO.cpp.i: cmake_force
@@ -212,7 +254,7 @@ CMakeFiles/framework.dir/trackerDSO.cpp.s: cmake_force
 CMakeFiles/framework.dir/trajectory.cpp.o: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/trajectory.cpp.o: /home/zml/desktop/framework/trajectory.cpp
 CMakeFiles/framework.dir/trajectory.cpp.o: CMakeFiles/framework.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/framework.dir/trajectory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/framework.dir/trajectory.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/framework.dir/trajectory.cpp.o -MF CMakeFiles/framework.dir/trajectory.cpp.o.d -o CMakeFiles/framework.dir/trajectory.cpp.o -c /home/zml/desktop/framework/trajectory.cpp
 
 CMakeFiles/framework.dir/trajectory.cpp.i: cmake_force
@@ -228,7 +270,10 @@ framework_OBJECTS = \
 "CMakeFiles/framework.dir/main.cpp.o" \
 "CMakeFiles/framework.dir/frame.cpp.o" \
 "CMakeFiles/framework.dir/global_params.cpp.o" \
+"CMakeFiles/framework.dir/immature_point.cpp.o" \
 "CMakeFiles/framework.dir/light_affine.cpp.o" \
+"CMakeFiles/framework.dir/map.cpp.o" \
+"CMakeFiles/framework.dir/map_point.cpp.o" \
 "CMakeFiles/framework.dir/pixel_select.cpp.o" \
 "CMakeFiles/framework.dir/point.cpp.o" \
 "CMakeFiles/framework.dir/process_image.cpp.o" \
@@ -243,7 +288,10 @@ framework_EXTERNAL_OBJECTS =
 framework: CMakeFiles/framework.dir/main.cpp.o
 framework: CMakeFiles/framework.dir/frame.cpp.o
 framework: CMakeFiles/framework.dir/global_params.cpp.o
+framework: CMakeFiles/framework.dir/immature_point.cpp.o
 framework: CMakeFiles/framework.dir/light_affine.cpp.o
+framework: CMakeFiles/framework.dir/map.cpp.o
+framework: CMakeFiles/framework.dir/map_point.cpp.o
 framework: CMakeFiles/framework.dir/pixel_select.cpp.o
 framework: CMakeFiles/framework.dir/point.cpp.o
 framework: CMakeFiles/framework.dir/process_image.cpp.o
@@ -393,7 +441,7 @@ framework: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.74.0
 framework: /usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.74.0
 framework: /usr/lib/x86_64-linux-gnu/libqhull_r.so.8.0.2
 framework: CMakeFiles/framework.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable framework"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/zml/desktop/framework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable framework"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/framework.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

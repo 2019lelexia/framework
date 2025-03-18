@@ -10,8 +10,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/zml/desktop/framework/frame.cpp" "CMakeFiles/framework.dir/frame.cpp.o" "gcc" "CMakeFiles/framework.dir/frame.cpp.o.d"
   "/home/zml/desktop/framework/global_params.cpp" "CMakeFiles/framework.dir/global_params.cpp.o" "gcc" "CMakeFiles/framework.dir/global_params.cpp.o.d"
+  "/home/zml/desktop/framework/immature_point.cpp" "CMakeFiles/framework.dir/immature_point.cpp.o" "gcc" "CMakeFiles/framework.dir/immature_point.cpp.o.d"
   "/home/zml/desktop/framework/light_affine.cpp" "CMakeFiles/framework.dir/light_affine.cpp.o" "gcc" "CMakeFiles/framework.dir/light_affine.cpp.o.d"
   "/home/zml/desktop/framework/main.cpp" "CMakeFiles/framework.dir/main.cpp.o" "gcc" "CMakeFiles/framework.dir/main.cpp.o.d"
+  "/home/zml/desktop/framework/map.cpp" "CMakeFiles/framework.dir/map.cpp.o" "gcc" "CMakeFiles/framework.dir/map.cpp.o.d"
+  "/home/zml/desktop/framework/map_point.cpp" "CMakeFiles/framework.dir/map_point.cpp.o" "gcc" "CMakeFiles/framework.dir/map_point.cpp.o.d"
   "/home/zml/desktop/framework/pixel_select.cpp" "CMakeFiles/framework.dir/pixel_select.cpp.o" "gcc" "CMakeFiles/framework.dir/pixel_select.cpp.o.d"
   "/home/zml/desktop/framework/point.cpp" "CMakeFiles/framework.dir/point.cpp.o" "gcc" "CMakeFiles/framework.dir/point.cpp.o.d"
   "/home/zml/desktop/framework/process_image.cpp" "CMakeFiles/framework.dir/process_image.cpp.o" "gcc" "CMakeFiles/framework.dir/process_image.cpp.o.d"
